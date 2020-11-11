@@ -7,24 +7,24 @@ public class GameOfLife {
 	int[][] grid;
 	
 	
-	//public GameOfLife(int[][] initialState) {
-		//this.n = n;
-		//n = initialState.length;
-		//grid = new int[n][n];
-		//grid = Arrays.copyOf(initialState, n);
-	//}
-	
-	public GameOfLife(int n) {
+	public GameOfLife(int[][] initialState) {
 		this.n = n;
+		n = initialState.length;
 		grid = new int[n][n];
+		grid = Arrays.copyOf(initialState, n);
 	}
+	
+	//public GameOfLife(int n) {
+		//this.n = n;
+		//grid = new int[n][n];
+	//}
 	
 	
 	//metode til at tegne 
 	public void setGrid() {
 		StdDraw.setCanvasSize(700,700);
 		StdDraw.setScale(n-(2+n),n+2);
-		StdDraw.setPenRadius(0.01);
+		StdDraw.setPenRadius(0.03);
 		StdDraw.enableDoubleBuffering();
 	}
 	
