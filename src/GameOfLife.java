@@ -28,17 +28,17 @@ public class GameOfLife {
 		StdDraw.enableDoubleBuffering();
 	}
 	
-	//tenging
+	//tegning
 	public static void drawNewCell(int x, int y) {
 		StdDraw.setPenColor(124, 185, 232);
 		StdDraw.point(x,y);
 	}
-	//tenging
+	//tegning
 	public static void drawDeadCell(int x, int y) {
 		StdDraw.setPenColor(150,0,42);
 		StdDraw.point(x,y);
 	}
-	//tenging
+	//tegning
 	public static void drawCell(int x, int y) {
 		StdDraw.setPenColor(132,222,100);
 		StdDraw.point(x,y);
