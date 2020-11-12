@@ -6,17 +6,24 @@ public class GameOfLife {
 	int gen;
 	int[][] grid;
 
+	//Contructor which takes an intial state
 	public GameOfLife(int[][] initialState) {
-		this.n = n;
 		n = initialState.length;
 		grid = new int[n][n];
 		grid = Arrays.copyOf(initialState, n);
 	}
-
-	// public GameOfLife(int n) {
-	// this.n = n;
-	// grid = new int[n][n];
-	// }
+	
+	// Contructor which creates a random nxn grid
+	public GameOfLife(int n) { 
+		this.n = n;
+		int[][] grid = new int[n][n];
+		
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+				grid[i][j] = (int) (Math.random() * 2);
+			}
+		}
+	}
 
 	// metode til at tegne
 	public void setGrid() {
@@ -55,15 +62,7 @@ public class GameOfLife {
 		System.out.println();
 	}
 
-	// metode til udfyldning af værdier
-	public void initializeGrid() {
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
-				grid[i][j] = (int) (Math.random() * 2);
-			}
-		}
-		printValues(grid);
-	}
+
 
 	// Live neighbors metode
 	private int liveNeighborsTorous(int[][] grid, int x, int y) {
