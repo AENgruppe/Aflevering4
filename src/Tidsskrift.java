@@ -1,7 +1,7 @@
 
 public class Tidsskrift {
 	String titel;
-	String forlag;
+	Forlag forlag;
 	String issn;
 	
 	public Tidsskrift(String titel) {
@@ -14,7 +14,7 @@ public class Tidsskrift {
 		
 	}
 	
-	public void setForlag(String forlag) {
+	public void setForlag(Forlag forlag) {
 		this.forlag = forlag;
 	}
 
