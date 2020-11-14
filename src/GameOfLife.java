@@ -3,69 +3,69 @@ import java.lang.Math;
 
 public class GameOfLife {
 	int n;
-	int gen;
 	int[][] grid;
+	private boolean torousMode;
 
 	//Contructor which takes an intial state
-	public GameOfLife(int[][] initialState) {
+	public GameOfLife(int[][] initialState, boolean torousFlag) {
 		n = initialState.length;
+		torousMode = torousFlag;
+		
 		grid = new int[n][n];
 		grid = Arrays.copyOf(initialState, n);
 	}
 	
 	// Contructor which creates a random nxn grid
-	public GameOfLife(int n) { 
+	public GameOfLife(int n, boolean torousFlag) { 
 		this.n = n;
-		int[][] grid = new int[n][n];
+		grid = new int[n][n];
+		torousMode = torousFlag;
 		
-		for (int i = 0; i < grid.length; i++) {
-			for (int j = 0; j < grid[i].length; j++) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
 				grid[i][j] = (int) (Math.random() * 2);
 			}
 		}
 	}
 
-	// metode til at tegne
-	public void setGrid() {
-		StdDraw.setCanvasSize(800, 800);
-		StdDraw.setScale(n - (2 + n), n + 2);
-		StdDraw.setPenRadius(0.001);
-		StdDraw.show(0);
-	}
 
-	// tegning
-	public static void drawNewCell(int x, int y) {
-		StdDraw.setPenColor(124, 185, 232);
-		StdDraw.filledSquare(x, y, 0.5);
-	}
 
-	// tegning
-	public static void drawDeadCell(int x, int y) {
-		StdDraw.setPenColor(150, 0, 42);
-		StdDraw.filledSquare(x, y, 0.5);
-	}
+	// next state metode for hele grid
+	public void nextState() {
+		int[][] nextGen = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
 
-	// tegning
-	public static void drawCell(int x, int y) {
-		StdDraw.setPenColor(132, 222, 100);
-		StdDraw.filledSquare(x, y, 0.5);
-	}
+				// opdater naboer
+				int status = grid[i][j];
+				int neighbors;
+				if (torousMode) {
+					neighbors = liveNeighborsTorous(i, j);
+				} else {
+					neighbors = liveNeighbors(i,j);
+				}
 
-	// metode til udprint af grid
-	public void printValues(int[][] game) {
-		for (int i = 0; i < game.length; i++) {
-			for (int j = 0; j < game[i].length; j++) {
-				System.out.print(game[i][j] + " ");
+				if (status == 1 && (neighbors == 2 || neighbors == 3)) {
+					nextGen[i][j] = 1;
+				} else if (status == 0 && neighbors == 3) {
+					nextGen[i][j] = 1;
+				} else {
+					nextGen[i][j] = 0;
+				}
+				if (nextGen[i][j] == 1) {
+					drawCell(i, j);
+				} else if (grid[i][j] == 1) {
+					drawDeadCell(i, j);
+				}
 			}
-			System.out.println();
 		}
-		System.out.println();
+		grid = Arrays.copyOf(nextGen, n);
+		StdDraw.show(100); // Render and wait for 0.1 seconds.
+		StdDraw.clear();
 	}
-
-
-
+	
 	// Live neighbors metode
-	private int liveNeighborsTorous(int[][] grid, int x, int y) {
+	private int liveNeighborsTorous(int x, int y) {
 		int liveCells = 0;
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
@@ -95,35 +95,30 @@ public class GameOfLife {
 									// it.
 		return liveCells;
 	}
+	
 
-	// next state metode for hele grid
-	public void nextState() {
-		int[][] nextGen = new int[n][n];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-
-				// opdater naboer
-				int status = grid[i][j];
-				int neighbors = liveNeighbors(i, j);
-
-				if (status == 1 && (neighbors == 2 || neighbors == 3)) {
-					nextGen[i][j] = 1;
-				} else if (status == 0 && neighbors == 3) {
-					nextGen[i][j] = 1;
-				} else {
-					nextGen[i][j] = 0;
-				}
-				if (nextGen[i][j] == 1) {
-					drawCell(i, j);
-				} else if (grid[i][j] == 1) {
-					drawDeadCell(i, j);
-				}
-			}
-		}
-		grid = Arrays.copyOf(nextGen, n);
-		StdDraw.show(100);
-		// StdDraw.pause(16);//16 ms er ca 60 fps
-		StdDraw.clear();
+	//DRAWING METHODS
+	public void initCanvas() {
+		StdDraw.setCanvasSize(800, 800);
+		StdDraw.setScale(-1, n);
+		StdDraw.setPenRadius(0.001);
+		StdDraw.show(0);
 	}
+
+	public static void drawNewCell(int x, int y) {
+		StdDraw.setPenColor(124, 185, 232);
+		StdDraw.filledSquare(x, y, 0.5);
+	}
+
+	public static void drawDeadCell(int x, int y) {
+		StdDraw.setPenColor(150, 0, 42);
+		StdDraw.filledSquare(x, y, 0.5);
+	}
+
+	public static void drawCell(int x, int y) {
+		StdDraw.setPenColor(132, 222, 100);
+		StdDraw.filledSquare(x, y, 0.5);
+	}
+
 
 }
