@@ -12,7 +12,7 @@ public class GameOfLife {
 		torousMode = torousFlag;
 		
 		grid = new int[n][n];
-		grid = Arrays.copyOf(initialState, n);
+		grid = Arrays.copyOf(initialState, n);initCanvas();
 	}
 	
 	// Contructor which creates a random nxn grid
@@ -26,25 +26,27 @@ public class GameOfLife {
 				grid[i][j] = (int) (Math.random() * 2);
 			}
 		}
+		initCanvas();
 	}
 
 
 
-	// next state metode for hele grid
+	// Computes the next gamestate
 	public void nextState() {
 		int[][] nextGen = new int[n][n];
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
 
-				// opdater naboer
+				//For each point, find the number of neighbors and apply rules
 				int status = grid[i][j];
 				int neighbors;
+				
 				if (torousMode) {
 					neighbors = liveNeighborsTorous(i, j);
 				} else {
 					neighbors = liveNeighbors(i,j);
 				}
-
+				
 				if (status == 1 && (neighbors == 2 || neighbors == 3)) {
 					nextGen[i][j] = 1;
 				} else if (status == 0 && neighbors == 3) {
@@ -52,6 +54,8 @@ public class GameOfLife {
 				} else {
 					nextGen[i][j] = 0;
 				}
+				
+				
 				if (nextGen[i][j] == 1) {
 					drawCell(i, j);
 				} else if (grid[i][j] == 1) {
@@ -98,19 +102,17 @@ public class GameOfLife {
 	
 
 	//DRAWING METHODS
+	
+	//I think the StdDraw "instance" is linked to this object, therefore we cannot inittialize the canvas without a GameOfLife object (at least without restructuring the way we draw the matrix). 
+	// This is why a screen won't appear until all user input has been processed and an object initialized.
 	public void initCanvas() {
 		StdDraw.setCanvasSize(800, 800);
-		StdDraw.setScale(-1, n);
-		StdDraw.setPenRadius(0.001);
 		StdDraw.show(0);
+		StdDraw.setScale(-1, n);
 	}
 
-	public static void drawNewCell(int x, int y) {
-		StdDraw.setPenColor(124, 185, 232);
-		StdDraw.filledSquare(x, y, 0.5);
-	}
 
-	public static void drawDeadCell(int x, int y) {
+	private static void drawDeadCell(int x, int y) {
 		StdDraw.setPenColor(150, 0, 42);
 		StdDraw.filledSquare(x, y, 0.5);
 	}

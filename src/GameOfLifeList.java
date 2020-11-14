@@ -21,7 +21,7 @@ public class GameOfLifeList {
 	public int findFrequencyWithLast() {
 		for (int i = 0; i < generation-1; i++) {
 			if (arrayEquals(list[generation-1],list[i])) {
-				return generation-i+1;
+				return generation-i;
 			}
 		}
 		return -1;

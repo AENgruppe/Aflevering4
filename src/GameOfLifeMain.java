@@ -12,7 +12,6 @@ public class GameOfLifeMain {
 		Scanner console = new Scanner(System.in);
 		GameOfLife l = welcomePlayer(console);
 		
-		l.initCanvas();
 		GameOfLifeList list = new GameOfLifeList(l); 
 		int frequency = list.findFrequencyWithLast(); //Initialized before while loop to avoid unnecessary allocations, perhaps the compiler does this by itself?
 		boolean freqFound = false;
@@ -20,7 +19,6 @@ public class GameOfLifeMain {
 		while (list.generation < GameOfLifeList.SIMULATION_LIMIT) {
 			l.nextState();
 			list.append(l);
-			
 			frequency = list.findFrequencyWithLast();
 			if (frequency != -1 && !freqFound) {
 				System.out.println("Found repetition at generation:" + list.generation + " with frequency " + frequency);
@@ -47,8 +45,8 @@ public class GameOfLifeMain {
 			int level = getLevel(console);
 			int[][] chosenGrid = readFile(PATHS[level]);
 			
-			int[][] grid = new int[(int) (SIZES[level] * 1.3)][(int) (SIZES[level]* 1.3)]; // This is to give space for
-																							// the patterns to take shape
+			int[][] grid = new int[(int) (SIZES[level] * 1.5)][(int) (SIZES[level]* 1.5)]; // This is to give space for
+																							// the patterns to take shape. However it seems that space has already been given to acorn.gol, which makes the map seem a bit too large, but as it works for the other levels it will have to make do.
 			
 			copyInto(grid, chosenGrid);
 			return new GameOfLife(grid, torousMode);
@@ -108,6 +106,7 @@ public class GameOfLifeMain {
 			if (console.hasNextInt()) {
 				size = console.nextInt();
 			} else {
+				console.next();
 				System.out.println("Please input a number.");
 			}
 		}
