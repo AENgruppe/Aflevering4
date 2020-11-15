@@ -92,7 +92,7 @@ public class GameOfLifeMain {
 	private static int getLevel(Scanner console) {
 		while (console.hasNextInt()) {
 			int input = console.nextInt();
-			if (input >= 1 || input <= 5) {
+			if (input >= 1 && input <= 5) {
 				return input - 1;
 			} else {
 				System.out.println("Please try again, this is not a possible value.");
