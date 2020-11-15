@@ -15,6 +15,5 @@ public class Letters {
 			}
 		}
 		return antalLet;
-		
 	}
 }

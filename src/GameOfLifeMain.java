@@ -82,6 +82,8 @@ public class GameOfLifeMain {
 		String stringInput = console.next();
 		if (stringInput.contains("Y") || stringInput.contains("y")) {
 			torousMode = true;
+		} else {
+			System.out.println("Oops that was not a valid answer. The map is not in torous mode.");
 		}
 		return torousMode;
 	}
