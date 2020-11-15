@@ -1,30 +1,40 @@
 import java.util.ArrayList;
 
+//Emilie
 public class Artikel {
 	String[] forfattere;
 	String titel;
 	Tidsskrift tidsskrift;
-	ArrayList<String> referenceListe = new ArrayList<String>();
+	String referenceListe;
 	
 	
 	public Artikel(String[] forfattere, String titel, Tidsskrift tidsskrift) {
 		this.forfattere = forfattere;
 		this.titel = titel;
 		this.tidsskrift = tidsskrift;
+		this.referenceListe = "";
 	}
 	
-	public void setReferenceliste(String reference) {
-		referenceListe.add(reference);
+	public void setReferenceliste(Artikel[] reference) {
+		String refList = "";
+		refList += reference[0];
+		for (int i = 1; i < reference.length; i++) {
+			refList += ", " + reference[i];
+		}
+		this.referenceListe = refList;
+	}
+	
+	public String getReferenceList() {
+		return this.referenceListe;
 	}
 	
 	public String toString() {
-		for(int i = 0; i<forfattere.length;i++) {
-			System.out.print(forfattere[i]);
-			if(i<forfattere.length-1) {
-				System.out.print(" & ");
-			}
+		String out = "";
+		out += forfattere[0];
+		for(int i = 1; i<forfattere.length;i++) {
+				out += " & " + forfattere[i];
 		}
-		return ": " + titel + " " + tidsskrift.forlag.navn;
+		return out + ": " + "\"" + titel + "\"." + " " + tidsskrift.forlag.navn;
 	}
 
 }

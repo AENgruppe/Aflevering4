@@ -12,7 +12,8 @@ public class GameOfLife {
 		torousMode = torousFlag;
 		
 		grid = new int[n][n];
-		grid = Arrays.copyOf(initialState, n);initCanvas();
+		grid = Arrays.copyOf(initialState, n);
+		initCanvas();
 	}
 	
 	// Contructor which creates a random nxn grid

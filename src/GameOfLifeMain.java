@@ -13,6 +13,7 @@ public class GameOfLifeMain {
 		GameOfLife l = welcomePlayer(console);
 		
 		GameOfLifeList list = new GameOfLifeList(l); 
+		
 		int frequency = list.findFrequencyWithLast(); //Initialized before while loop to avoid unnecessary allocations, perhaps the compiler does this by itself?
 		boolean freqFound = false;
 		

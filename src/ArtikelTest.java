@@ -1,4 +1,5 @@
 
+//Emilie
 public class ArtikelTest {
 
 	public static void main(String[] args) {
@@ -17,12 +18,17 @@ public class ArtikelTest {
 		
 		Artikel artikel2 = new Artikel(fB, "B", tidsskrift1);
 		
-		artikel1.setReferenceliste(artikel2.titel);
-		System.out.println(artikel2);
-		System.out.println(artikel1.referenceListe);
+		Artikel[] artikel1Refs = new Artikel[] {artikel2};
+		
+		artikel1.setReferenceliste(artikel1Refs);
+		
 		
 		System.out.println(artikel1);
-		System.out.println(artikel2.referenceListe);
+		
+		System.out.println(artikel2);
+		
+		System.out.println("1.st article's refs: " + artikel1.getReferenceList());
+
 		
 		
 
